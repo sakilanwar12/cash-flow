@@ -5,10 +5,17 @@ interface EnvConfig {
   PORT: string;
   DB_URL: string;
   FRONTEND_URL: string;
-  NODE_ENV: string
+  NODE_ENV: string;
+  BCRYPT_SALT_ROUND: number;
 }
 const loadEnvVariables = (): EnvConfig => {
-  const requiredEnvVariables: string[] = ["PORT", "DB_URL","FRONTEND_URL","NODE_ENV"];
+  const requiredEnvVariables: string[] = [
+    "PORT",
+    "DB_URL",
+    "FRONTEND_URL",
+    "NODE_ENV",
+    "BCRYPT_SALT_ROUND",
+  ];
 
   requiredEnvVariables.forEach((key) => {
     if (!process.env[key]) {
@@ -20,7 +27,8 @@ const loadEnvVariables = (): EnvConfig => {
     PORT: process.env.PORT as string,
     DB_URL: process.env.DB_URL as string,
     FRONTEND_URL: process.env.FRONTEND_URL as string,
-    NODE_ENV: process.env.NODE_ENV as string
+    NODE_ENV: process.env.NODE_ENV as string,
+    BCRYPT_SALT_ROUND: Number(process.env.BCRYPT_SALT_ROUND),
   };
 };
 

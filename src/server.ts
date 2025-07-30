@@ -1,7 +1,7 @@
 import { Server } from "http";
 import app from "./app";
 import mongoose from "mongoose";
-import { envVars } from "./config/env";
+import { envVars } from "./app/config/env";
 
 let server: Server;
 
@@ -16,55 +16,50 @@ const bootStrap = async () => {
 
 bootStrap();
 
-
 process.on("SIGTERM", () => {
-    console.log("SIGTERM signal received... Server shutting down..");
+  console.log("SIGTERM signal received... Server shutting down..");
 
-    if (server) {
-        server.close(() => {
-            process.exit(1)
-        });
-    }
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
 
-    process.exit(1)
-})
+  process.exit(1);
+});
 
 process.on("SIGINT", () => {
-    console.log("SIGINT signal received... Server shutting down..");
+  console.log("SIGINT signal received... Server shutting down..");
 
-    if (server) {
-        server.close(() => {
-            process.exit(1)
-        });
-    }
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
 
-    process.exit(1)
-})
-
+  process.exit(1);
+});
 
 process.on("unhandledRejection", (err) => {
-    console.log("Unhandled Rejection detected... Server shutting down..", err);
+  console.log("Unhandled Rejection detected... Server shutting down..", err);
 
-    if (server) {
-        server.close(() => {
-            process.exit(1)
-        });
-    }
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
 
-    process.exit(1)
-})
+  process.exit(1);
+});
 
 process.on("uncaughtException", (err) => {
-    console.log("Uncaught Exception detected... Server shutting down..", err);
+  console.log("Uncaught Exception detected... Server shutting down..", err);
 
-    if (server) {
-        server.close(() => {
-            process.exit(1)
-        });
-    }
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
 
-    process.exit(1)
-})
-
-
-
+  process.exit(1);
+});
