@@ -32,6 +32,33 @@ const credentialsLogin = catchAsync(
     });
   }
 );
+
+const getNewAccessToken = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "No refresh token received from cookies"
+      );
+    }
+    const tokenInfo = await AuthServices.getNewAccessToken(
+      refreshToken as string
+    );
+
+    setAuthCookie(res, tokenInfo);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "New Access Token Retrieved Successfully",
+      data: tokenInfo,
+    });
+  }
+);
 export const AuthControllers = {
   credentialsLogin,
+  getNewAccessToken,
 };

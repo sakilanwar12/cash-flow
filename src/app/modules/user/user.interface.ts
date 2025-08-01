@@ -17,6 +17,8 @@ export enum IsActive {
   BLOCKED = "BLOCKED",
 }
 
+export type TIsActive = `${IsActive}`;
+
 export interface IUser {
   _id?: Types.ObjectId;
   name: string;
@@ -26,7 +28,7 @@ export interface IUser {
   picture?: string;
   address?: string;
   isDeleted?: string;
-  IsActive?: IsActive;
+  IsActive?: TIsActive;
   isVerified?: boolean;
   role: Role;
   auths: IAuthProvider[];
