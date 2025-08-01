@@ -4,13 +4,14 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { AuthServices } from "./auth-service";
 import AppError from "../../errorHelpers/AppError";
+import { setAuthCookie } from "../../utils/setCookie";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const query = req.body;
-    const result = await AuthServices.loginUser(query);
+    const loginInfo = await AuthServices.loginUser(query);
 
-    const { accessToken, refreshToken, user } = result;
+    const { accessToken, refreshToken, user } = loginInfo;
 
     if (!accessToken || !refreshToken) {
       throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to login");
@@ -18,7 +19,7 @@ const credentialsLogin = catchAsync(
     if (!user) {
       return next(new AppError(httpStatus.UNAUTHORIZED, "Invalid credentials"));
     }
-
+    setAuthCookie(res, loginInfo);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.CREATED,
