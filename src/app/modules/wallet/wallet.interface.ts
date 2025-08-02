@@ -1,0 +1,14 @@
+import { Types } from "mongoose";
+
+export enum EWalletStatus{
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE",
+    BLOCKED = "BLOCKED"
+}
+export interface IWallet {
+    user:  Types.ObjectId;
+    balance: number;
+    status: EWalletStatus;
+    createdAt?: Date;
+    updatedAt?: Date;
+}

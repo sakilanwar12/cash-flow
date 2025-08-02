@@ -33,4 +33,5 @@ export interface IUser {
   role: Role;
   auths: IAuthProvider[];
   createdAt?: Date;
+  updatedAt?: Date;
 }

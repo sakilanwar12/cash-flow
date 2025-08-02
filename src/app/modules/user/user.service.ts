@@ -6,6 +6,8 @@ import { userSearchableFields } from "./user.constant";
 import AppError from "../../errorHelpers/AppError";
 import { envVars } from "../../config/env";
 import { QueryBuilder } from "../../utils/QueryBuilder";
+import { Wallet } from "../wallet/wallet.model";
+import { EWalletStatus } from "../wallet/wallet.interface";
 
 const createUser = async (payload: Partial<IUser>) => {
   const { email, password, ...rest } = payload;
@@ -38,6 +40,15 @@ const createUser = async (payload: Partial<IUser>) => {
     auths: [authProvider],
     ...rest,
   });
+
+  if (user?.role === "USER" || user?.role === "AGENT") {
+    await Wallet.create({
+      user: user._id,
+      balance: 50,
+      status: EWalletStatus.ACTIVE,
+    });
+  }
+  
 
   return user;
 };
