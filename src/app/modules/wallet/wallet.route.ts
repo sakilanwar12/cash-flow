@@ -10,14 +10,14 @@ const router = Router();
 router.post(
   "/top-up",
   validateRequest(topUpWalletZodSchema),
-  checkAuth(Role.USER, Role.AGENT),
+  checkAuth(Role.USER),
   WalletControllers.topUpWallet
 );
 
 router.post(
   "/withdraw",
   validateRequest(topUpWalletZodSchema),
-  checkAuth(Role.USER, Role.AGENT),
+  checkAuth(Role.USER),
   WalletControllers.withDrawMoney
 );
 
