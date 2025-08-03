@@ -18,7 +18,22 @@ const topUpWallet = catchAsync(
     });
   }
 );
+const withDrawMoney = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    
+    const user = await WalletService.withDrawMoney(req.body);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Withdraw Wallet Successfully",
+      data: user,
+    });
+  }
+);
 
 export const WalletControllers = {
   topUpWallet,
+  withDrawMoney
 };

@@ -14,7 +14,11 @@ router.post(
   WalletControllers.topUpWallet
 );
 
-// router.get("/all-users", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
-// router.get("/:id", checkAuth(Role.ADMIN), UserControllers.getSingleUser);
+router.post(
+  "/withdraw",
+  validateRequest(topUpWalletZodSchema),
+  checkAuth(Role.USER, Role.AGENT),
+  WalletControllers.withDrawMoney
+);
 
 export const WalletRoutes = router;
