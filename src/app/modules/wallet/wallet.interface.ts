@@ -1,14 +1,20 @@
 import { Types } from "mongoose";
 
-export enum EWalletStatus{
-    ACTIVE = "ACTIVE",
-    INACTIVE = "INACTIVE",
-    BLOCKED = "BLOCKED"
+export enum EWalletStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+  BLOCKED = "BLOCKED",
 }
 export interface IWallet {
-    user:  Types.ObjectId;
-    balance: number;
-    status: EWalletStatus;
-    createdAt?: Date;
-    updatedAt?: Date;
+  user: Types.ObjectId;
+  balance: number;
+  status: EWalletStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface ISendMoney {
+  senderId: string;
+  recipientId: string;
+  amount: number;
 }

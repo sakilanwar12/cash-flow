@@ -3,11 +3,11 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { WalletService } from "./wallet.service";
+import AppError from "../../errorHelpers/AppError";
 
 const topUpWallet = catchAsync(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (req: Request, res: Response, next: NextFunction) => {
-    
     const user = await WalletService.topUpWallet(req.body);
 
     sendResponse(res, {
@@ -21,7 +21,6 @@ const topUpWallet = catchAsync(
 const withDrawMoney = catchAsync(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (req: Request, res: Response, next: NextFunction) => {
-    
     const user = await WalletService.withDrawMoney(req.body);
 
     sendResponse(res, {
@@ -33,7 +32,40 @@ const withDrawMoney = catchAsync(
   }
 );
 
+const sendMoney = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const data = await WalletService.sendMoney(req.body);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Send Money Successfully",
+      data,
+    });
+  }
+);
+
+const getWallet = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+    if (!userId) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User Id is required");
+    }
+    const data = await WalletService.getWallet(userId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Get Wallet Successfully",
+      data,
+    });
+  }
+);
 export const WalletControllers = {
   topUpWallet,
-  withDrawMoney
+  withDrawMoney,
+  sendMoney,
+  getWallet,
 };
