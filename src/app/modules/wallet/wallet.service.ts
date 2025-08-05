@@ -2,6 +2,7 @@ import httpStatus from "http-status-codes";
 import AppError from "../../errorHelpers/AppError";
 import { ISendMoney, IWallet } from "./wallet.interface";
 import { Wallet } from "./wallet.model";
+import { Transaction } from "../transaction/transaction.model";
 
 const topUpWallet = async (payload: Partial<IWallet>) => {
   const { user, balance } = payload;
@@ -24,6 +25,14 @@ const topUpWallet = async (payload: Partial<IWallet>) => {
   existingWallet.balance += balance;
   await existingWallet.save();
 
+  await Transaction.create({
+    senderId: user,
+    recipientId: user,
+    amount: balance,
+    type: "TopUp",
+    status: "success",
+  });
+
   return existingWallet;
 };
 const withDrawMoney = async (payload: Partial<IWallet>) => {
@@ -37,7 +46,6 @@ const withDrawMoney = async (payload: Partial<IWallet>) => {
   }
 
   const existingWallet = await Wallet.findOne({ user });
-  console.log("existingWallet");
 
   if (!existingWallet) {
     throw new AppError(httpStatus.NOT_FOUND, "Wallet not found");
@@ -50,7 +58,14 @@ const withDrawMoney = async (payload: Partial<IWallet>) => {
   existingWallet.balance -= balance;
   await existingWallet.save();
 
-  await existingWallet.save();
+  await Transaction.create({
+    senderId: user,
+    recipientId: user,
+    amount: balance,
+    type: "withdraw",
+    status: "success",
+  });
+
 
   return existingWallet;
 };
@@ -97,6 +112,15 @@ const sendMoney = async (payload: ISendMoney) => {
   await senderWallet.save();
   await recipientWallet.save();
 
+  await Transaction.create({
+    senderId,
+    recipientId,
+    amount,
+    type: "transfer",
+    status: "success",
+  });
+
+
   return senderWallet.toObject();
 };
 
@@ -112,5 +136,5 @@ export const WalletService = {
   topUpWallet,
   withDrawMoney,
   sendMoney,
-  getWallet
+  getWallet,
 };
