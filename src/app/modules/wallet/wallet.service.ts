@@ -1,6 +1,6 @@
 import httpStatus from "http-status-codes";
 import AppError from "../../errorHelpers/AppError";
-import { ISendMoney, IWallet } from "./wallet.interface";
+import { IAgentCashIn, ISendMoney, IWallet } from "./wallet.interface";
 import { Wallet } from "./wallet.model";
 import { Transaction } from "../transaction/transaction.model";
 
@@ -66,7 +66,6 @@ const withDrawMoney = async (payload: Partial<IWallet>) => {
     status: "success",
   });
 
-
   return existingWallet;
 };
 const sendMoney = async (payload: ISendMoney) => {
@@ -120,7 +119,6 @@ const sendMoney = async (payload: ISendMoney) => {
     status: "success",
   });
 
-
   return senderWallet.toObject();
 };
 
@@ -132,9 +130,47 @@ const getWallet = async (userId: string) => {
   return wallet;
 };
 
+const agentCashIn = async ({ userId, agentId, amount }: IAgentCashIn) => {
+  // agent will give money to user in his wallet
+  const agentWallet = await Wallet.findOne({ user: agentId });
+
+  if (!agentWallet) {
+    throw new AppError(httpStatus.NOT_FOUND, "Agent wallet not found");
+  }
+
+  if (agentWallet.balance < amount) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Insufficient agent wallet balance"
+    );
+  }
+
+  const userWallet = await Wallet.findOne({ user: userId });
+  if (!userWallet) {
+    throw new AppError(httpStatus.NOT_FOUND, "User Wallet not found");
+  }
+
+  agentWallet.balance -= amount;
+  userWallet.balance += amount;
+
+  await agentWallet.save();
+  await userWallet.save();
+
+  await Transaction.create({
+    senderId: agentId,
+    recipientId: userId,
+    amount,
+    type: "agentCashIn",
+    status: "success",
+  });
+
+  return agentWallet.toObject();
+};
+
 export const WalletService = {
   topUpWallet,
   withDrawMoney,
   sendMoney,
   getWallet,
+  agentCashIn,
 };

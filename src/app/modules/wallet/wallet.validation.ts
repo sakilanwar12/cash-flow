@@ -27,3 +27,19 @@ export const sendMoneySchema = z.object({
     .number({ message: "Amount must be a number" })
     .positive("Amount must be greater than 0"),
 });
+
+export const agentCashInSchema = z.object({
+  userId: z
+    .string({ message: "User ID is required" })
+    .refine((val) => isValidObjectId(val), {
+      message: "Invalid MongoDB ObjectId",
+    }),
+  agentId: z
+    .string({ message: "Agent ID is required" })
+    .refine((val) => isValidObjectId(val), {
+      message: "Invalid MongoDB ObjectId",
+    }),
+  amount: z
+    .number({ message: "Amount must be a number" })
+    .positive("Amount must be greater than 0"),
+});

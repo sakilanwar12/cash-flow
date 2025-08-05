@@ -3,7 +3,7 @@ import { WalletControllers } from "./wallet.controller";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "../user/user.interface";
 import { validateRequest } from "../../middlewares/validateRequest";
-import { sendMoneySchema, topUpWalletZodSchema } from "./wallet.validation";
+import { agentCashInSchema, sendMoneySchema, topUpWalletZodSchema } from "./wallet.validation";
 
 const router = Router();
 
@@ -31,6 +31,13 @@ router.post(
   validateRequest(sendMoneySchema),
   checkAuth(Role.USER),
   WalletControllers.sendMoney
+);
+
+router.post(
+  "/agent-cash-in",
+  validateRequest(agentCashInSchema),
+  checkAuth(Role.AGENT),
+  WalletControllers.agentCashIn
 );
 
 export const WalletRoutes = router;

@@ -18,3 +18,9 @@ export interface ISendMoney {
   recipientId: string;
   amount: number;
 }
+
+export interface IAgentCashIn {
+  userId: Types.ObjectId;
+  agentId: Types.ObjectId;
+  amount: number;
+}

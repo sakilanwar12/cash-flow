@@ -5,7 +5,8 @@ export enum ETransactionType {
     Withdraw="withdraw",
     SendMoney="sendMoney",
     ReceiveMoney="receiveMoney",
-    Transfer="transfer"
+    Transfer="transfer",
+    AgentCashIn="agentCashIn"
 }
 export type TTransactionType = `${ETransactionType}`;
 export enum TTransactionStatus{
