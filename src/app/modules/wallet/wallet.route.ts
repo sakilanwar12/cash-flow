@@ -40,4 +40,11 @@ router.post(
   WalletControllers.agentCashIn
 );
 
+router.post(
+  "/agent-cash-out",
+  validateRequest(agentCashInSchema),
+  checkAuth(Role.AGENT),
+  WalletControllers.agentCashOut
+);
+
 export const WalletRoutes = router;

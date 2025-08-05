@@ -24,3 +24,8 @@ export interface IAgentCashIn {
   agentId: Types.ObjectId;
   amount: number;
 }
+export interface IAgentCashOut {
+  userId: Types.ObjectId;
+  agentId: Types.ObjectId;
+  amount: number;
+}

@@ -76,11 +76,26 @@ const agentCashIn = catchAsync(
       data,
     });
   }
-)
+);
+const agentCashOut = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const data = await WalletService.agentCashOut(req.body);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Agent Cash Out Successfully",
+      data,
+    });
+  }
+);
+
 export const WalletControllers = {
   topUpWallet,
   withDrawMoney,
   sendMoney,
   getWallet,
-  agentCashIn
+  agentCashIn,
+  agentCashOut,
 };
