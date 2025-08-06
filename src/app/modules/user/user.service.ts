@@ -54,6 +54,7 @@ const createUser = async (payload: Partial<IUser>) => {
 };
 
 const getAllUsers = async (query: Record<string, string>) => {
+  console.log(query);
   const queryBuilder = new QueryBuilder(User.find(), query);
   const usersData = queryBuilder
     .filter()

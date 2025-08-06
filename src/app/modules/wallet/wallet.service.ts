@@ -1,8 +1,14 @@
 import httpStatus from "http-status-codes";
 import AppError from "../../errorHelpers/AppError";
-import { IAgentCashIn, IAgentCashOut, ISendMoney, IWallet } from "./wallet.interface";
+import {
+  IAgentCashIn,
+  IAgentCashOut,
+  ISendMoney,
+  IWallet,
+} from "./wallet.interface";
 import { Wallet } from "./wallet.model";
 import { Transaction } from "../transaction/transaction.model";
+import { QueryBuilder } from "../../utils/QueryBuilder";
 
 const topUpWallet = async (payload: Partial<IWallet>) => {
   const { user, balance } = payload;
@@ -204,11 +210,29 @@ const agentCashOut = async ({ userId, agentId, amount }: IAgentCashOut) => {
 
   return agentWallet.toObject();
 };
+
+// get wallets admin
+const getAllWallets = async (query: Record<string, string>) => {
+
+  const queryBuilder = new QueryBuilder(Wallet.find(), query);
+  const usersData = queryBuilder.filter().sort().fields().paginate();
+
+  const [data, meta] = await Promise.all([
+    usersData.build(),
+    queryBuilder.getMeta(),
+  ]);
+
+  return {
+    data,
+    meta,
+  };
+};
 export const WalletService = {
   topUpWallet,
   withDrawMoney,
   sendMoney,
   getWallet,
   agentCashIn,
-  agentCashOut
+  agentCashOut,
+  getAllWallets,
 };

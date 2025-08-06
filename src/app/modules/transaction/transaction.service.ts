@@ -2,7 +2,7 @@ import httpStatus from "http-status-codes";
 import AppError from "../../errorHelpers/AppError";
 import { Transaction } from "./transaction.model";
 
-export const getUserTransactions = async (userId: string) => {
+const getUserTransactions = async (userId: string) => {
   if (!userId) {
     throw new AppError(httpStatus.BAD_REQUEST, "User Id is required");
   }
@@ -14,7 +14,12 @@ export const getUserTransactions = async (userId: string) => {
     .select("-__v");
   return data;
 };
+const getAllTransactons = async () => {
+  const data = await Transaction.find().sort({ createdAt: -1 }).select("-__v");
+  return data;
+};
 
 export const TransactionServices = {
   getUserTransactions,
+  getAllTransactons,
 };

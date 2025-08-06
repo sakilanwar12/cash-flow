@@ -91,6 +91,23 @@ const agentCashOut = catchAsync(
   }
 );
 
+const getAllWallets = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query;
+    const data = await WalletService.getAllWallets(
+      query as Record<string, string>
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Get All Wallet Successfully",
+      data,
+    });
+  }
+);
+
 export const WalletControllers = {
   topUpWallet,
   withDrawMoney,
@@ -98,4 +115,5 @@ export const WalletControllers = {
   getWallet,
   agentCashIn,
   agentCashOut,
+  getAllWallets,
 };

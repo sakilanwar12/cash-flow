@@ -6,6 +6,11 @@ import { TransactionControllers } from "./transaction.controller";
 const router = Router();
 
 router.get(
+  "/all-transactions",
+   checkAuth(Role.ADMIN),
+  TransactionControllers.getAllTransactons
+);
+router.get(
   "/:userId",
    checkAuth(Role.USER),
   TransactionControllers.getUserTransactions

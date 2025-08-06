@@ -22,6 +22,21 @@ const getUserTransactions = catchAsync(
     });
   }
 );
+
+const getAllTransactons = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const data = await TransactionServices.getAllTransactons();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Get All Transaction Successfully",
+      data,
+    });
+  }
+)
 export const TransactionControllers = {
   getUserTransactions,
+  getAllTransactons
 };
