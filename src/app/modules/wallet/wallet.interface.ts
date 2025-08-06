@@ -5,10 +5,11 @@ export enum EWalletStatus {
   INACTIVE = "INACTIVE",
   BLOCKED = "BLOCKED",
 }
+export type TWalletStatus = `${EWalletStatus}`;
 export interface IWallet {
   user: Types.ObjectId;
   balance: number;
-  status: EWalletStatus;
+  status: TWalletStatus;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -29,3 +30,5 @@ export interface IAgentCashOut {
   agentId: Types.ObjectId;
   amount: number;
 }
+
+export type TBlockWallet = Pick<IWallet, "status" | "user">;

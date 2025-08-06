@@ -1,5 +1,6 @@
 import z from "zod";
 import { isValidObjectId } from "mongoose";
+import { EWalletStatus } from "./wallet.interface";
 
 export const topUpWalletZodSchema = z.object({
   user: z
@@ -42,4 +43,13 @@ export const agentCashInSchema = z.object({
   amount: z
     .number({ message: "Amount must be a number" })
     .positive("Amount must be greater than 0"),
+});
+
+export const toggleWalletStatusSchema = z.object({
+  user: z
+    .string({ message: "User ID is required" })
+    .refine((val) => isValidObjectId(val), {
+      message: "Invalid MongoDB ObjectId",
+    }),
+  status: z.enum(Object.values(EWalletStatus) as [string]),
 });

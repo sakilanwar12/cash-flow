@@ -108,6 +108,20 @@ const getAllWallets = catchAsync(
   }
 );
 
+const toggleWalletStatus = catchAsync(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (req: Request, res: Response, next: NextFunction) => {
+    const data = await WalletService.toggleWalletStatus(req.body);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Toggle Wallet Status Successfully",
+      data,
+    });
+  }
+);
+
 export const WalletControllers = {
   topUpWallet,
   withDrawMoney,
@@ -116,4 +130,5 @@ export const WalletControllers = {
   agentCashIn,
   agentCashOut,
   getAllWallets,
+  toggleWalletStatus
 };

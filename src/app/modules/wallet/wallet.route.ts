@@ -6,6 +6,7 @@ import { validateRequest } from "../../middlewares/validateRequest";
 import {
   agentCashInSchema,
   sendMoneySchema,
+  toggleWalletStatusSchema,
   topUpWalletZodSchema,
 } from "./wallet.validation";
 
@@ -51,6 +52,11 @@ router.post(
   checkAuth(Role.AGENT),
   WalletControllers.agentCashOut
 );
-
+router.post(
+  "/toggle-wallet-status",
+  validateRequest(toggleWalletStatusSchema),
+  checkAuth(Role.ADMIN),
+  WalletControllers.toggleWalletStatus
+);
 
 export const WalletRoutes = router;

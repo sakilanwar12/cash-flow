@@ -5,6 +5,7 @@ import {
   IAgentCashOut,
   ISendMoney,
   IWallet,
+  TBlockWallet,
 } from "./wallet.interface";
 import { Wallet } from "./wallet.model";
 import { Transaction } from "../transaction/transaction.model";
@@ -213,7 +214,6 @@ const agentCashOut = async ({ userId, agentId, amount }: IAgentCashOut) => {
 
 // get wallets admin
 const getAllWallets = async (query: Record<string, string>) => {
-
   const queryBuilder = new QueryBuilder(Wallet.find(), query);
   const usersData = queryBuilder.filter().sort().fields().paginate();
 
@@ -227,6 +227,23 @@ const getAllWallets = async (query: Record<string, string>) => {
     meta,
   };
 };
+
+// block wallet( only admin can block the user wallet)
+const toggleWalletStatus  =  async ({status,user}:TBlockWallet) => {
+  if(!user){
+    throw new AppError(httpStatus.BAD_REQUEST,"User is required");
+  }
+  if(!status){
+    throw new AppError(httpStatus.BAD_REQUEST,"Status is required");
+  }
+  const wallet = await Wallet.findOne({user});
+  if(!wallet){
+    throw new AppError(httpStatus.NOT_FOUND,"Wallet not found");
+  }
+  wallet.status = status;
+  await wallet.save();
+  return wallet;
+}
 export const WalletService = {
   topUpWallet,
   withDrawMoney,
@@ -235,4 +252,5 @@ export const WalletService = {
   agentCashIn,
   agentCashOut,
   getAllWallets,
+  toggleWalletStatus
 };
