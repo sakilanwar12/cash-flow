@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 import httpStatus from "http-status-codes";
-import { IAuthProvider, IUser } from "./user.interface";
+import { IAgentStatus, IAuthProvider, IUser } from "./user.interface";
 import { User } from "./user.model";
 import { userSearchableFields } from "./user.constant";
 import AppError from "../../errorHelpers/AppError";
@@ -48,7 +48,6 @@ const createUser = async (payload: Partial<IUser>) => {
       status: EWalletStatus.ACTIVE,
     });
   }
-  
 
   return user;
 };
@@ -79,8 +78,24 @@ const getSingleUser = async (id: string) => {
     data: user,
   };
 };
+const updateAgentStatus = async ({ agentId, status }: IAgentStatus) => {
+  if (!agentId || !status) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Agent Id and Status is required"
+    );
+  }
+  const agent = await User.findById(agentId);
+  if (!agent) {
+    throw new AppError(httpStatus.NOT_FOUND, "Agent not found");
+  }
+  agent.IsActive = status ;
+  await agent.save();
+  return agent;
+};
 export const UserServices = {
   createUser,
   getAllUsers,
   getSingleUser,
+  updateAgentStatus,
 };

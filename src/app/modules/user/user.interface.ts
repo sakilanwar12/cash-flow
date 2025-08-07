@@ -15,6 +15,7 @@ export enum IsActive {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
   BLOCKED = "BLOCKED",
+  SUSPENDED = "SUSPENDED",
 }
 
 export type TIsActive = `${IsActive}`;
@@ -34,4 +35,9 @@ export interface IUser {
   auths: IAuthProvider[];
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface IAgentStatus{
+  agentId: Types.ObjectId,
+  status: TIsActive
 }

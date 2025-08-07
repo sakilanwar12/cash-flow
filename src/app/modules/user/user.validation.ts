@@ -1,5 +1,6 @@
 import z from "zod";
 import { IsActive, Role } from "./user.interface";
+import { isValidObjectId } from "mongoose";
 
 export const createUserZodSchema = z.object({
   name: z
@@ -68,4 +69,13 @@ export const updateUserZodSchema = z.object({
     .string({ message: "Address must be string" })
     .max(200, { message: "Address cannot exceed 200 characters." })
     .optional(),
+});
+
+export const toggleAgentStatusSchema = z.object({
+  agentId: z
+    .string({ message: "User ID is required" })
+    .refine((val) => isValidObjectId(val), {
+      message: "Invalid MongoDB ObjectId",
+    }),
+  status: z.enum(Object.values(IsActive) as [string]),
 });

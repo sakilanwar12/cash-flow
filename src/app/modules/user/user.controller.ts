@@ -8,7 +8,6 @@ import { sendResponse } from "../../utils/sendResponse";
 
 const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-  
     const user = await UserServices.createUser(req.body);
 
     sendResponse(res, {
@@ -48,10 +47,20 @@ const getSingleUser = catchAsync(
     });
   }
 );
-
+const updateAgentStatus = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await UserServices.updateAgentStatus(req.body);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Agent Status Updated Successfully",
+      data: result,
+    });
+  }
+);
 export const UserControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
+  updateAgentStatus,
 };
-
