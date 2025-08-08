@@ -53,8 +53,12 @@ const createUser = async (payload: Partial<IUser>) => {
 };
 
 const getAllUsers = async (query: Record<string, string>) => {
-  console.log(query);
-  const queryBuilder = new QueryBuilder(User.find(), query);
+
+   const queryBuilder = new QueryBuilder(
+    User.find().select('-password'),
+    query
+  );
+
   const usersData = queryBuilder
     .filter()
     .search(userSearchableFields)
@@ -66,7 +70,7 @@ const getAllUsers = async (query: Record<string, string>) => {
     usersData.build(),
     queryBuilder.getMeta(),
   ]);
-
+  console.log(data);
   return {
     data,
     meta,
@@ -89,7 +93,7 @@ const updateAgentStatus = async ({ agentId, status }: IAgentStatus) => {
   if (!agent) {
     throw new AppError(httpStatus.NOT_FOUND, "Agent not found");
   }
-  agent.IsActive = status ;
+  agent.IsActive = status;
   await agent.save();
   return agent;
 };
