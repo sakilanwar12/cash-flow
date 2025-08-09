@@ -21,6 +21,9 @@ This application allows users to register, manage wallets, and perform actions s
   - Approve/suspend agents
 - ✅ Role-based route protection must be implemented
 
+## Tech Stack
+
+- Express JS, TypeScript, Mongodb
 ---
 
 ## Installation Process
