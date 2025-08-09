@@ -10,6 +10,7 @@ import { Role } from "./user.interface";
 
 const router = Router();
 
+
 router.post(
   "/register",
   validateRequest(createUserZodSchema),
@@ -17,7 +18,6 @@ router.post(
 );
 
 router.get("/all-users", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
-router.get("/:id", checkAuth(Role.USER), UserControllers.getSingleUser);
 
 router.post(
   "/update-agent-status",
@@ -25,5 +25,6 @@ router.post(
   checkAuth(Role.ADMIN),
   UserControllers.updateAgentStatus
 );
+router.get("/:id", checkAuth(Role.USER, Role.ADMIN, Role.AGENT), UserControllers.getSingleUser);
 
 export const UserRoutes = router;
