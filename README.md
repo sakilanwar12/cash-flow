@@ -65,7 +65,7 @@ Authentication
 
 ### 1\. Create Or Register User/admin/agent
 
-**POST** `/api/v1/user/register`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/user/register`
 
 #### Request:
 
@@ -110,7 +110,7 @@ Authentication
 
 ### 2\. Login USER/ADMIN/AGENT
 
-**POST** `/api/v1/auth/login`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/auth/login`
 
 #### Request:
 
@@ -156,7 +156,7 @@ Authentication
 
 ### 3\. Logout
 
-**POST** `/api/v1/auth/logout`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/auth/logout`
 
 #### Response:
 
@@ -173,7 +173,7 @@ Authentication
 
 ### 1\. GET All users (only admin can get all users)
 
-**GET** `/api/v1/user/all-users?role=ADMIN`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/user/all-users?role=ADMIN`
 
 #### Response:
 
@@ -214,7 +214,7 @@ Authentication
 
 ### 2\. GET A Single user
 
-**GET** `api/v1/user/:userId`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/user/:userId`
 
 #### Response:
 
@@ -249,7 +249,7 @@ Users action
 
 ### 1\. Add money (top-up)
 
-**POST** `/api/v1/wallet/top-up`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/wallet/top-up`
 
 #### Request:
 
@@ -280,7 +280,7 @@ Users action
 
 ### 2\. Withdraw money
 
-**POST** `/api/v1/wallet/withdraw`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/wallet/withdraw`
 
 #### Request:
 
@@ -311,7 +311,7 @@ Users action
 
 ### 3\. Send money to another user
 
-**POST** `/api/v1/wallet/send-money`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/wallet/send-money`
 
 #### Request:
 
@@ -343,7 +343,7 @@ Users action
 
 ### 4\. View transaction history
 
-**GET** `/api/v1/transaction/:userId`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/transaction/:userId`
 
 #### Response:
 
@@ -372,7 +372,7 @@ Users action
 
 ### 1\. Add money to any user's wallet (cash-in)
 
-**POST** `/api/v1/wallet/agent-cash-in`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/wallet/agent-cash-in`
 
 ### Request :
 
@@ -404,7 +404,7 @@ Users action
 
 ### 2\. Withdraw money from any user's wallet (cash-out)
 
-**POST** `/api/v1/wallet/agent-cash-out`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/wallet/agent-cash-out`
 
 ### Request :
 
@@ -438,8 +438,8 @@ Users action
 
 ### 1\. View all users, agents,
 
-**GET** `/api/v1/user/all-users?role=USER`
-**GET** `/api/v1/user/all-users?role=AGENT`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/user/all-users?role=USER`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/user/all-users?role=AGENT`
 
 #### Response:
 
@@ -479,7 +479,7 @@ Users action
 
 ### 2\. View all wallets
 
-**GET** `/api/v1/wallet/all-wallets`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/wallet/all-wallets`
 
 #### Response:
 
@@ -512,7 +512,7 @@ Users action
 
 ### 3\. View all transactions
 
-**GET** `/api/v1/transaction/all-transactions`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/transaction/all-transactions`
 
 #### Response:
 
@@ -539,7 +539,7 @@ Users action
 
 ### 4\. View all transactions
 
-**GET** `/api/v1/transaction/all-transactions`
+**GET** `https://cash-flow-virid.vercel.app/api/v1/transaction/all-transactions`
 
 #### Response:
 
@@ -566,7 +566,7 @@ Users action
 
 ### 5\. Block/unblock user wallets
 
-**POST** `/api/v1/wallet/toggle-wallet-status`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/wallet/toggle-wallet-status`
 
 #### Request:
 
@@ -597,7 +597,7 @@ Users action
 
 ### 6\. Approve/suspend agents
 
-**POST** `/api/v1/user/update-agent-status`
+**POST** `https://cash-flow-virid.vercel.app/api/v1/user/update-agent-status`
 
 #### Request:
 
