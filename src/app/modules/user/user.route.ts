@@ -17,7 +17,7 @@ router.post(
 );
 
 router.get("/all-users", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
-router.get("/:id", checkAuth(Role.ADMIN), UserControllers.getSingleUser);
+router.get("/:id", checkAuth(Role.USER), UserControllers.getSingleUser);
 
 router.post(
   "/update-agent-status",
